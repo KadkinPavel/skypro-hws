@@ -1,11 +1,20 @@
-from masks.py import get_mask_card_number, get_mask_account
-def mask_account_card(card_number:Union[str:int]) -> str:
-    """Функция, которая обрабатывает информацию как о картах, так и о счетах"""
-    card_number = card_number.split()
-    for i in card_number:
-        if i.isdigit():
-            a = get_mask_card_number()
-            break
-    return mask_account_card(i)
+from masks import get_mask_card_number, get_mask_account
 
-print(mask_account_card(input()))
+
+def mask_account_card(card_info: str) -> str:
+    """Функция, которая обрабатывает информацию как о картах, так и о счетах"""
+    parts = card_info.split()
+
+    if 'Счет' in parts:
+        account_number = parts[-1]
+        masked_number = get_mask_account(account_number)
+        print(f"{' '.join(parts[:-1])} {masked_number}")
+    else:
+        card_name = ' '.join(parts[:-1])
+        card_number = parts[-1]
+        masked_number = get_mask_card_number(card_number)
+        print(f'{card_name} {masked_number}')
+
+
+
+
