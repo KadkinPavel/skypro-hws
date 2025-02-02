@@ -16,5 +16,6 @@ def mask_account_card(card_info: str) -> str:
         print(f'{card_name} {masked_number}')
 
 
-
-
+def get_date(date: str) -> str:
+    new_date = date.split('-')
+    return f'{new_date[2][:2]}.{new_date[1]}.{new_date[0]}'
