@@ -1,9 +1,8 @@
-import pytest
-
 from src.masks import get_mask_card_number, get_mask_account
 
 def test_get_mask_card_number():
     """Тест функции get_mask_card_number"""
+
     #Номер карты нормального значения
     assert get_mask_card_number("7000792289606361") == '7000 79** **** 6361'
 
