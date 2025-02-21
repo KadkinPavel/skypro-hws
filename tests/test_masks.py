@@ -15,3 +15,21 @@ def test_get_mask_card_number():
 
     #Вместо номера карты пустое значение
     assert get_mask_card_number("") == " ** **** "
+
+    #Номер карты, содержащий не цифры
+    assert get_mask_card_number("abcddefghjkltyui") == "abcd de** **** tyui"
+
+def test_get_mask_account():
+    """Тест функции get_mask_account"""
+
+    #Номер счета нормальный
+    assert get_mask_account("73654108430135874305") == "**4305"
+
+    #Номер счета короткий (меньше 4 символов)
+    assert get_mask_account("305") == "**305"
+
+    #Номер счёта, содержащий не цифры
+    assert get_mask_account("abcdefg") == "**defg"
+
+    #Пустой номер счета
+    assert get_mask_account("") == "**"
