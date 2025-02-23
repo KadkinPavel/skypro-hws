@@ -98,5 +98,15 @@ def transaction_descriptions(transactions):
 
 descriptions = transaction_descriptions(transactions)
 
-for _ in range(5):
-    print(next(descriptions))
+#for _ in range(5):
+    #print(next(descriptions))
+
+def card_number_generator(start, end):
+    for number in range(start, end + 1):
+        card_number = str(number).zfill(16) #Увидел в тик токе прикольный метод zfill, решил использовать раз такой случай выпал
+        yield f"{card_number[:4]} {card_number[4:8]} {card_number[8:12]} {card_number[12:16]}"
+
+#вместо x и y вписать начальное и конечное значение
+
+#for card_number in card_number_generator(x, y):
+    #print(card_number)
