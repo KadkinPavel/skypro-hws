@@ -1,5 +1,6 @@
 import pytest
-from generators import filter_by_currency, transaction_descriptions, card_number_generator
+from src.generators import filter_by_currency, transaction_descriptions, card_number_generator
+
 
 @pytest.fixture
 def transactions():
@@ -50,14 +51,17 @@ def transactions():
             "to": "Счет 74489636417521191160"
         }
     ]
-#Тест по USD
+
+
+# Тест по USD
 def test_filter_by_currency_usd(transactions):
     result = list(filter_by_currency(transactions, "USD"))
     assert len(result) == 2  # 2 транзакции в USD
     assert result[0]["id"] == 939719570
     assert result[1]["id"] == 142264268
 
-#Тест по RUB
+
+# Тест по RUB
 def test_filter_by_currency_rub(transactions):
     result = list(filter_by_currency(transactions, "RUB"))
     assert len(result) == 1  # 1 транзакция в RUB
@@ -77,6 +81,7 @@ def test_card_number_generator_range():
     result = list(card_number_generator(start, end))
     assert result == expected_output
 
+
 # Тест корректности форматирования
 def test_card_number_generator_formatting():
     start = 9999999999999995
@@ -90,6 +95,7 @@ def test_card_number_generator_formatting():
     ]
     result = list(card_number_generator(start, end))
     assert result == expected_output
+
 
 # Тест обработки крайних значений диапазона
 def test_card_number_generator_edge_cases():
@@ -113,3 +119,41 @@ def test_card_number_generator_edge_cases():
     result = list(card_number_generator(start, end))
     assert result == expected_output
 
+
+def test_transaction_descriptions(transactions):
+    descriptions = list(transaction_descriptions(transactions))
+    expected_descriptions = [
+        "Перевод организации",
+        "Перевод со счета на счет",
+        "Перевод со счета на счет"
+    ]
+    assert descriptions == expected_descriptions
+
+
+# Тест работы с пустым списком
+def test_transaction_descriptions_empty_list():
+    descriptions = list(transaction_descriptions([]))
+    assert descriptions == []  # Ожидаем пустой список
+
+
+# Тест работы с одной транзакцией
+def test_transaction_descriptions_single_transaction():
+    single_transaction = [
+        {
+            "id": 939719570,
+            "state": "EXECUTED",
+            "date": "2018-06-30T02:08:58.425572",
+            "operationAmount": {
+                "amount": "9824.07",
+                "currency": {
+                    "name": "USD",
+                    "code": "USD"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Счет 75106830613657916952",
+            "to": "Счет 11776614605963066702"
+        }
+    ]
+    descriptions = list(transaction_descriptions(single_transaction))
+    assert descriptions == ["Перевод организации"]
