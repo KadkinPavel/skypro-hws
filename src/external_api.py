@@ -10,7 +10,6 @@ def convert_to_rub(amount, currency):
     """
     Конвертирует сумму в рубли с использованием внешнего API.
 
-
     """
     if currency == "RUB":
         return float(amount)
