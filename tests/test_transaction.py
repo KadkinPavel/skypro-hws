@@ -8,7 +8,6 @@ class TestTransactions(unittest.TestCase):
 
     @patch('external_api.requests.get')
     def test_convert_to_rub(self, mock_get):
-        # Мокируем ответ API
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = {'result': 7500.0}
 
